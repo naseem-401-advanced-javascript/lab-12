@@ -7,8 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "nodemon index.js"
-  },
+    "start": "nodemon index.js",
+    "lint":"eslint '**/*.js'"  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naseem-401-advanced-javascript/lab-12.git"
