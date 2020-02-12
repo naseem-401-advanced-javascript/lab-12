@@ -20,26 +20,33 @@ users.pre('save', async function () {
     return Promise.reject();
 });
 
-users.statics.authenticater = function (auth) { /// I got confused to use eathier statcs or methods for this function  
+// statics with schema iself
+// methods with instantiate
+users.statics.authenticater = function (auth) {  
     let query = { username: auth.user };
+
     return this.findOne(query)
         .then(user => {
             return user.passwordComparator(auth.pass);
         })
         .catch(console.error);
 };
-
+// beacuse it is for one username 
 users.methods.passwordComparator = function (pass) {
-    console.log('password1', pass);
-    console.log('password2', this.password);
     return bcrypt.compare(pass, this.password)
         .then(valid => {
             return valid ? this : null
         });
 };
 
-users.statics.tokenGenerator = function (user) {
-    console.log('there');
+users.methods.signupTokenGenerator = function (user) {
+    let token = {
+        id: user._id,
+    };
+    return jwt.sign(token, SECRET);
+};
+
+users.statics.signinTokenGenerator = function (user) {
     let token = {
         id: user._id,
     };

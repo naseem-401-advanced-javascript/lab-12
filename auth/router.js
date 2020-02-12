@@ -17,11 +17,9 @@ router.get('/oauth', oauthMiddleware, oauth);
 
 function signup(req, res, next) {
   let user = new User(req.body);
-  console.log('ssss', user);
   user.save()
     .then(user => {
-      console.log('asdsad', user);
-      req.token = user.tokenGenerator(user);
+      req.token = user.signupTokenGenerator(user);
       req.user = user;
       res.status(200).send(req.token);
     })
@@ -39,7 +37,7 @@ function getUser(req, res, next) {
     });
 }
 
-function oauth(re, res, next) {
+function oauth(req, res, next) {
   res.status(200).send(req.token);
 }
 

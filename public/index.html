@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+<h1>my app</h1> 
+<a id="ltuc" href="">log in </a>    
+</body>
+<script>
+    let URL = 'https://github.com/login/oauth/authorize';
+    let options = {
+        client_id :'b173d5950b2ddf752004',
+        redirect_uri :'http://localhost:3000/oauth',
+        scope:'read:user',
+        state:'401appconsent'
+    }
+    let QueryString = Object.keys(options).map((key)=>{
+        return `${key}=`+ encodeURIComponent(options[key]);
+    }).join('&');
+    let authURL = `${URL}?${QueryString}`;
+    let link = document.getElementById('ltuc');
+    link.setAttribute('href',authURL);
+</script>
+</html>

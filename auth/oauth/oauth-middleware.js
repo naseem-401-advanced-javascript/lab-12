@@ -31,6 +31,7 @@ async function codeTokenExchanger(code) {
         client_secret: CLIENT_SECRET,
         redirect_uri: API_SERVER,
         grant_type: 'authorization_code',
+        // header of the oauth 
     });
 
     let access_token = tokenResponse.body.access_token;
@@ -49,7 +50,7 @@ async function getRemoteUserInfo(token) {
 async function getUser(remoteUser) {
     let userRecord = {
         username: remoteUser.login,
-        password: 'oauthpassword',
+        password: 'nasa',
     };
     let newUser = new Users(userRecord);
     let user = await newUser.save();

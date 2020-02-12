@@ -12,15 +12,13 @@ module.exports = (req, res, next) => {
   }
 
   let basic = req.headers.authorization.split(' ').pop();
-
   let [user, pass] = base64.decode(basic).split(':');
   let auth = { user, pass };
 
   users.authenticater(auth)
     .then(validUser => {
-      console.log('validSUser', validUser);
-      req.token = users.tokenGenerator(validUser);
-      console.log('here');
+      console.log(validUser)
+      req.token = users.signinTokenGenerator(validUser);
       next();
     })
     .catch(() => next('invalid login'));
