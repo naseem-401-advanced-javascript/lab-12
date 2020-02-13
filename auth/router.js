@@ -14,7 +14,8 @@ router.post('/signup', signup);
 router.post('/signin', authMiddleware, signin);
 router.get('/user', getUser);
 router.get('/oauth', oauthMiddleware, oauth);
-
+// hash the pass from req body then save
+// create new user and save it in databsase
 function signup(req, res, next) {
   let user = new User(req.body);
   user.save()
@@ -27,10 +28,13 @@ function signup(req, res, next) {
 }
 
 function signin(req, res, next) {
+  // creat token and append to req by basicAuth middleware
   res.send(req.token);
 }
 
 function getUser(req, res, next) {
+// show all users from database
+
   User.list()
     .then(data => {
       res.status(200).json(data);
