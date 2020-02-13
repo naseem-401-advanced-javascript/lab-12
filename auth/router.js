@@ -9,11 +9,13 @@ const router = express.Router();
 const User = require('./users.js');
 const authMiddleware = require('./auth-middleware.js');
 const oauthMiddleware = require('./oauth/oauth-middleware.js');
+const bearerMiddleware = require('./bearer/bearer-middleware.js');
 
 router.post('/signup', signup);
 router.post('/signin', authMiddleware, signin);
-router.get('/user', getUser);
+router.get('/getUser', getUser);
 router.get('/oauth', oauthMiddleware, oauth);
+router.get('/user', bearerMiddleware, bearer );
 // hash the pass from req body then save
 // create new user and save it in databsase
 function signup(req, res, next) {
@@ -45,4 +47,7 @@ function oauth(req, res, next) {
   res.status(200).send(req.token);
 }
 
+function bearer(req, res, next) {
+  res.status(200).json(req.user);
+}
 module.exports = router;

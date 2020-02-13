@@ -42,6 +42,7 @@ users.methods.passwordComparator = function (pass) {
 users.methods.signupTokenGenerator = function (user) {
     let token = {
         id: user._id,
+        username: user.username
     };
     return jwt.sign(token, SECRET);
 };
@@ -49,6 +50,7 @@ users.methods.signupTokenGenerator = function (user) {
 users.statics.signinTokenGenerator = function (user) {
     let token = {
         id: user._id,
+        username: user.username
     };
     return jwt.sign(token, SECRET);
 };
@@ -56,6 +58,19 @@ users.statics.signinTokenGenerator = function (user) {
 users.statics.list = async function () {
     let result = await this.find({});
     return result;
+}
+
+users.statics.authenticateToken = async function (token) {
+    try {
+        let tokenObject = jwt.verify(token, SECRET);
+        if (tokenObject.username) {
+            return Promise.resolve(tokenObject.username);
+        } else {
+            return Promise.reject();
+        }
+    } catch (e) {
+        return Promise.reject();
+    };
 }
 
 module.exports = mongoose.model('users', users);
