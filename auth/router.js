@@ -57,7 +57,7 @@ function oauth(req, res, next) {
 }
 
 function bearer(req, res, next) {
-  res.status(200).json(req.user);
+  res.status(200).json([req.user.username, req.user.role]);
 }
 
 function aclOk(req, res, next) {

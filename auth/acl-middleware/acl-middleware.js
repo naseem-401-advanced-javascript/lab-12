@@ -3,10 +3,10 @@
 
 const user = require('../users.js');
 
-module.exports = () =>{
+module.exports = (capability) =>{
   return (req,res,next) =>{
     try {
-      if (user.capabilitiesChecer(capability, req.user.capabilities)) {
+      if (user.capabilitiesChecker(capability, req.user.role)) {
         next();
       } else {
         next('Access Denied');
